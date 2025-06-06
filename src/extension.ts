@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.Uri.file(path.join(context.extensionPath, 'media', 'webview.js'))
     );
 
-    panel.webview.html = getWebviewContent(styleUri, scriptUri);
+    panel.webview.html = getWebviewContent(panel.webview, styleUri, scriptUri);
 
     panel.webview.onDidReceiveMessage(async (message) => {
       if (message.command === 'sendPrompt') {
@@ -39,14 +39,23 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {}
 
-function getWebviewContent(styleUri: vscode.Uri, scriptUri: vscode.Uri) {
+function getWebviewContent(webview: vscode.Webview, styleUri: vscode.Uri, scriptUri: vscode.Uri): string {
+  const nonce = getNonce();
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Artemis Chat</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="${styleUri}" rel="stylesheet" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    style-src ${webview.cspSource};
+    script-src 'nonce-${nonce}';
+    img-src data:;
+    font-src data:;
+  ">
+  <link rel="stylesheet" href="${styleUri}" />
 </head>
 <body>
   <div id="chat" role="log" aria-live="polite"></div>
@@ -59,7 +68,7 @@ function getWebviewContent(styleUri: vscode.Uri, scriptUri: vscode.Uri) {
     <button id="sendBtn" type="submit" aria-label="Send message">Send</button>
   </form>
 
-  <script src="${scriptUri}"></script>
+  <script nonce="${nonce}" src="${scriptUri}"></script>
 </body>
 </html>`;
 }
@@ -83,4 +92,11 @@ async function queryOllama(prompt: string): Promise<string> {
   }
 }
 
-
+function getNonce(): string {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 32; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}

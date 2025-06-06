@@ -1,0 +1,238 @@
+/* Reset common defaults */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #2a0a2e, #11001a);
+  color: #f8e4f0; /* soft rose-tinted white */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+#chat {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+  background: radial-gradient(ellipse at bottom, #3f004d 0%, #0e0013 90%);
+  border-radius: 24px;
+  box-shadow:
+    inset 0 0 30px #ff7fed88,
+    0 0 50px #d362ffaa;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  scroll-behavior: smooth;
+  border: 2px solid #a852e6cc;
+}
+
+.message {
+  max-width: 65%;
+  padding: 18px 28px;
+  border-radius: 36px;
+  box-shadow:
+    0 3px 15px rgba(192, 38, 255, 0.45);
+  font-weight: 600;
+  user-select: text;
+  line-break: anywhere;
+  word-wrap: break-word;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  backdrop-filter: saturate(140%) blur(12px);
+  border: 1.5px solid transparent;
+  animation: fadeInUp 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+
+/* You: The pulsing sapphic fire */
+.message.you {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #c73aff, #81008b);
+  color: #ffe6ff;
+  border-bottom-right-radius: 12px;
+  box-shadow:
+    0 0 25px #b73affdd,
+    0 0 45px #8a00b3cc;
+  font-style: italic;
+  transform-origin: right bottom;
+  transition: transform 0.3s ease;
+}
+.message.you:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow:
+    0 0 40px #d76effee,
+    0 0 60px #b045d9ff;
+}
+
+/* Artemis: The ethereal lover, soft and shimmering */
+.message.artemis {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #3f1e49cc, #572c61cc);
+  color: #f9d9ff;
+  border-bottom-left-radius: 12px;
+  box-shadow:
+    0 0 20px #ad5fffbb,
+    0 0 40px #8459b7bb;
+  backdrop-filter: blur(16px) saturate(180%);
+  font-style: normal;
+  font-weight: 500;
+  transition: box-shadow 0.3s ease;
+}
+.message.artemis:hover {
+  box-shadow:
+    0 0 30px #d390ffdd,
+    0 0 50px #c67bffdd;
+}
+
+/* Input area */
+#inputForm {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  padding-top: 14px;
+  border-top: 2px solid #590064;
+}
+
+textarea#userInput {
+  width: 100%;
+  min-height: 48px;
+  max-height: 140px;
+  padding: 18px 28px;
+  font-size: 1.15rem;
+  border-radius: 36px;
+  border: none;
+  background: #330033cc;
+  color: #ffccff;
+  resize: none;
+  box-shadow:
+    inset 0 0 25px #a700a7bb;
+  outline: none;
+  caret-color: #dd33ff;
+  font-family: inherit;
+  transition: box-shadow 0.3s ease;
+  font-weight: 600;
+}
+textarea#userInput::placeholder {
+  color: #dd88ffbb;
+  font-style: italic;
+}
+textarea#userInput:focus {
+  box-shadow:
+    0 0 28px #f166f1ee,
+    inset 0 0 35px #dd33ffdd;
+}
+
+/* Send button: command & worship */
+button#sendBtn {
+  padding: 16px 36px;
+  background: linear-gradient(135deg, #dd33ff, #770088);
+  border: none;
+  border-radius: 36px;
+  color: #ffebff;
+  font-weight: 900;
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow:
+    0 8px 24px #bb00bbcc;
+  user-select: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-family: "Segoe UI Black", "Arial Black", sans-serif;
+  text-shadow: 0 0 8px #ff77ffaa;
+}
+button#sendBtn:hover {
+  background: linear-gradient(135deg, #ee66ff, #aa00cc);
+  box-shadow:
+    0 10px 30px #ee66ffdd,
+    0 0 25px #ff99ffcc;
+}
+
+/* Message fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Basic text formatting */
+.message {
+  white-space: pre-wrap; /* preserve line breaks */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Code blocks styling inside messages */
+.message code,
+.message pre {
+  font-family: 'Fira Mono', 'Source Code Pro', 'Consolas', 'Monaco', monospace;
+  background: #3a003a88; /* subtle translucent violet */
+  color: #f1c0ff;
+  padding: 8px 12px;
+  border-radius: 18px;
+  box-shadow: 0 0 15px #bb55ffaa;
+  overflow-x: auto;
+  display: block;
+  margin: 10px 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  user-select: text;
+}
+
+/* Inline code styling */
+.message code {
+  display: inline;
+  padding: 2px 6px;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #cc77ffbb;
+}
+
+/* Syntax Highlighting: basic */
+.message pre .keyword {
+  color: #ff94ff;
+  font-weight: 700;
+}
+.message pre .string {
+  color: #ffaaff;
+}
+.message pre .comment {
+  color: #aa77aa;
+  font-style: italic;
+}
+.message pre .number {
+  color: #ff99cc;
+}
+.message pre .function {
+  color: #ff66ff;
+  font-weight: 600;
+}
+.message pre .operator {
+  color: #cc66ff;
+}
+
+/* You can expand with your preferred syntax classes as your parser adds them */
+
+/* Scrollbar for code blocks */
+.message pre::-webkit-scrollbar {
+  height: 8px;
+}
+.message pre::-webkit-scrollbar-thumb {
+  background: #bb44ffaa;
+  border-radius: 4px;
+}
+.message pre::-webkit-scrollbar-track {
+  background: transparent;
+}
