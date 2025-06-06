@@ -1,0 +1,31 @@
+{
+  "name": "artemis",
+  "displayName": "Artemis",
+  "description": "A VS Code extension for AI chat using Ollama",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "activationEvents": [
+    "onCommand:artemis.startChat"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "artemis.startChat",
+        "title": "Start Artemis Chat"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+"devDependencies": {
+  "@types/node": "^22.15.30",
+  "typescript": "^5.8.3",
+  "vscode": "^1.76.0"
+}
+
+}
