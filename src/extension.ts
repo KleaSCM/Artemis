@@ -42,6 +42,28 @@ export function deactivate() {}
 function getWebviewContent(webview: vscode.Webview, styleUri: vscode.Uri, scriptUri: vscode.Uri): string {
   const nonce = getNonce();
 
+  const prismCssUri = webview.asWebviewUri(
+    vscode.Uri.file(path.join(__dirname, '..', 'media', 'prism-tomorrow.min.css'))
+  );
+  const prismJsUri = webview.asWebviewUri(
+    vscode.Uri.file(path.join(__dirname, '..', 'media', 'prism.min.js'))
+  );
+  const prismPythonUri = webview.asWebviewUri(
+    vscode.Uri.file(path.join(__dirname, '..', 'media', 'prism-python.min.js'))
+  );
+  const prismJsLangUri = webview.asWebviewUri(
+    vscode.Uri.file(path.join(__dirname, '..', 'media', 'prism-javascript.min.js'))
+  );
+  const prismGoUri = webview.asWebviewUri(
+    vscode.Uri.file(path.join(__dirname, '..', 'media', 'prism-go.min.js'))
+  );
+  const prismRustUri = webview.asWebviewUri(
+    vscode.Uri.file(path.join(__dirname, '..', 'media', 'prism-rust.min.js'))
+  );
+  const prismTsUri = webview.asWebviewUri(
+    vscode.Uri.file(path.join(__dirname, '..', 'media', 'prism-typescript.min.js'))
+  );
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,6 +78,7 @@ function getWebviewContent(webview: vscode.Webview, styleUri: vscode.Uri, script
     font-src data:;
   ">
   <link rel="stylesheet" href="${styleUri}" />
+  <link rel="stylesheet" href="${prismCssUri}" />
 </head>
 <body>
   <div id="chat" role="log" aria-live="polite"></div>
@@ -68,6 +91,12 @@ function getWebviewContent(webview: vscode.Webview, styleUri: vscode.Uri, script
     <button id="sendBtn" type="submit" aria-label="Send message">Send</button>
   </form>
 
+  <script nonce="${nonce}" src="${prismJsUri}"></script>
+  <script nonce="${nonce}" src="${prismPythonUri}"></script>
+  <script nonce="${nonce}" src="${prismJsLangUri}"></script>
+  <script nonce="${nonce}" src="${prismGoUri}"></script>
+  <script nonce="${nonce}" src="${prismRustUri}"></script>
+  <script nonce="${nonce}" src="${prismTsUri}"></script>
   <script nonce="${nonce}" src="${scriptUri}"></script>
 </body>
 </html>`;
